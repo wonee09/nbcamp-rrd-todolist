@@ -2,10 +2,12 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { deleteTodo, toggleTodo } from "../redux/modules/todos";
+import { useNavigate } from "react-router-dom";
 
 const TodoListContainer = () => {
   const { todos } = useSelector((state) => state.todos);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   // handlers
   const onDeleteHandler = (id) => {
@@ -13,6 +15,9 @@ const TodoListContainer = () => {
   };
   const onToggleHandler = (id) => {
     dispatch(toggleTodo({ id }));
+  };
+  const onDetailButtonHandler = (id) => {
+    navigate(`/${id}`);
   };
 
   // todoList, doneList
@@ -41,6 +46,9 @@ const TodoListContainer = () => {
                 삭제
               </StButton>
             </StButtonContainer>
+            <StButton onClick={() => onDetailButtonHandler(todo.id)}>
+              상세보기
+            </StButton>
           </StTodo>
         ))}
       </StTodos>
@@ -74,7 +82,7 @@ const StTodos = styled.div`
 const StTodo = styled.div`
   border: 1px solid #ddd;
   width: 20%;
-  height: 100px;
+  height: 140px;
   display: flex;
   gap: 12px;
   flex-direction: column;
